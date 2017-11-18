@@ -8,7 +8,8 @@ if (process.env.NODE_ENV == 'dev'){
         API_AI_CLIENT_ACCESS_TOKEN: process.env.API_AI_CLIENT_ACCESS_TOKEN,		
         FB_APP_SECRET: process.env.FB_APP_SECRET,		
         SERVER_URL: process.env.SERVER_URL,		
-        ASKDARCEL_URL: process.env.ASKDARCEL_URL		
+        MEETUP_URL: process.env.MEETUP_URL,
+        MEETUP_API_KEY: process.env.MEETUP_API_ENV
     };		
 }		
 		
@@ -18,5 +19,6 @@ module.exports = {
     API_AI_CLIENT_ACCESS_TOKEN: config.API_AI_CLIENT_ACCESS_TOKEN,		
     FB_APP_SECRET: config.FB_APP_SECRET,		
     SERVER_URL: config.SERVER_URL,		
-    ASKDARCEL_URL: config.ASKDARCEL_URL		
+    MEETUP_URL: config.MEETUP_URL,
+    MEETUP_API_KEY: config.MEETUP_API_KEY
 }
