@@ -2,22 +2,22 @@
 
 // Generate a List template of resources. 
 // 
-module.exports.generateListing = function (resources, max_length){
+module.exports.generateListing = function (events){
     let fbPayload = {
         template_type: "list", 
         top_element_style: "compact", 
         elements: []
     }
-    for (let i=0; i<Math.min(max_length, resources.length); i++) {
-        let r = resources[i];
+    for (let i=0; i<events.length; i++) {
+        let e = events[i];
         let listItem = {
-            title: r.name, 
-            subtitle: r.short_description, 
+            title: e.name, 
+            subtitle: e.description, 
             buttons: [
                 {
                     title: "Get Details",
                     type: "postback", 
-                    payload: "GET_RESOURCE"+"|"+r.id
+                    payload: "GET_EVENT_DETAILS"+"|"+e.id+"|"+e.group.urlname
                 }
             ]
         }

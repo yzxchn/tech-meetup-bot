@@ -5,6 +5,7 @@ const fb_utils = require('./messenger_utils.js');
 const fb_attach = require('./attachment.js');
 const apiai_interface = require('./apiai/interface.js');
 const templating = require('../generateResourceListing.js');
+const postback_handling = require('./postback.js');
 const uuid = require('uuid');
 
 module.exports = {
@@ -133,7 +134,7 @@ function handleCardMessages(messages, sender) {
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
  * 
  */
-function receivedPostback(event) {
+function receivedPostback(event, sessionIDs) {
     var senderID = event.sender.id;
     var recipientID = event.recipient.id;
     var timeOfPostback = event.timestamp;
@@ -145,12 +146,9 @@ function receivedPostback(event) {
     var identifier = payload[0];
 
     switch (identifier) {
-        case "GET_RESOURCE":
+        case "GET_EVENT_DETAILS":
             console.log("handling GET_RESOURCE postback");
-            postback_handling.handleGetResource(event, payload);
-            let resource_info = getResource(id);
-            let msg = templating.generateResourceGeneric(resource_info);
-            //TODO: put the handling in a separate function
+            postback_handling.handleGetEventDetails(senderID, payload, sessionIDs);
             break;
         default:
             //unindentified payload

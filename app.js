@@ -95,7 +95,7 @@ app.post('/webhook/', function (req, res) {
                 } else if (messagingEvent.delivery) {
                     fb_events.receivedDeliveryConfirmation(messagingEvent);
                 } else if (messagingEvent.postback) {
-                    fb_events.receivedPostback(messagingEvent);
+                    fb_events.receivedPostback(messagingEvent, sessionIDs);
                 } else if (messagingEvent.read) {
                     fb_events.receivedMessageRead(messagingEvent);
                 } else if (messagingEvent.account_linking) {

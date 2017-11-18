@@ -4,6 +4,8 @@ const fb_sample = require('../templates/sample_listing.js');
 const templateGeneration = require('../../generateResourceListing.js');
 const config = require('../../conf.js');
 const meetup = require('../../meetup_api.js');
+const templating = require('../../generateResourceListing.js');
+const messaging = require('../messaging.js');
 
 module.exports.requestUserLocation = function (sender, action, message, contexts, parameters) {
     var replies = [{"content_type":"location"}];
@@ -33,9 +35,16 @@ module.exports.findMeetups = async function (sender, action, message, contexts, 
     let query = parameters.term ? parameters.term : parameters.fallback_term;
     let latitude = usrLocation.latitude;
     let longitude = usrLocation.longitude;
-    let end_date = parameters.date;
+    let end_date = parameters.date.length==0? undefined: parameters.date;
 
     console.log("Got location from user: ",latitude, longitude);
+    console.log("end_date=", end_date);
     let events = await meetup.findEvents(longitude, latitude, query, end_date);
-    console.log(events);
+    events = events['events'];
+    if (events.length == 0) {
+        messaging.sendTextMessage(sender, "Sorry, I can't find any events.");
+    } else {
+        let payload = templating.generateListing(events);
+        messaging.sendTemplateMessage(sender, payload);
+    }
 }

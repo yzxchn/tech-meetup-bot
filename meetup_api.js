@@ -28,3 +28,18 @@ module.exports.findEvents = async function (lon, lat, q, end_date) {
         console.log(err); 
     }
 }
+
+module.exports.getEventDetails = async function (id, urlname) {
+    let options = {
+        uri: BASE_URL+"/"+urlname+"/events/"+id,
+        transform: function (body) {
+            return JSON.parse(body);
+        }, 
+        method: "GET"
+    }
+    try {
+        return await rp(options);
+    } catch (err) {
+        console.log(err);
+    }
+}
