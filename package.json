@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "engines": {
-          "node": "8.9.1"
+    "node": "8.9.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +19,7 @@
     "apiai": "^3.0.3",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "meetup-api": "^1.4.29",
     "nodemon": "^1.12.1",
     "request": "^2.72.0",
     "request-promise-native": "^1.0.5",
