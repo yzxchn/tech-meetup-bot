@@ -49,114 +49,13 @@ function handleApiAiResponse(sender, response) {
     }
 }
 
-// Some of the code in this function is not necessary at this moment.
-//
-// function handleApiAiResponse(sender, response) {
-//     let responseText = response.result.fulfillment.speech;
-//     let responseData = response.result.fulfillment.data;
-//     let messages = response.result.fulfillment.messages;
-//     let action = response.result.action;
-//     let contexts = response.result.contexts;
-//     let parameters = response.result.parameters;
-// 
-//     console.log("Data from api.ai:");
-//     console.log(response.result);
-// 
-//     fb_messaging.sendTypingOff(sender);
-// 
-//     if (utils.isDefined(messages) && (messages.length == 1 && messages[0].type != 0 || messages.length > 1)) {
-//         let timeoutInterval = 1100;
-//         let previousType ;
-//         let cardTypes = [];
-//         let timeout = 0;
-//         for (var i = 0; i < messages.length; i++) {
-// 
-//             if ( previousType == 1 && (messages[i].type != 1 || i == messages.length - 1)) {
-// 
-//                 timeout = (i - 1) * timeoutInterval;
-//                 setTimeout(handleCardMessages.bind(null, cardTypes, sender), timeout);
-//                 cardTypes = [];
-//                 timeout = i * timeoutInterval;
-//                 setTimeout(handleMessage.bind(null, messages[i], sender), timeout);
-//             } else if ( messages[i].type == 1 && i == messages.length - 1) {
-//                 cardTypes.push(messages[i]);
-//                 timeout = (i - 1) * timeoutInterval;
-//                 setTimeout(handleCardMessages.bind(null, cardTypes, sender), timeout);
-//                 cardTypes = [];
-//             } else if ( messages[i].type == 1 ) {
-//                 cardTypes.push(messages[i]);
-//             } else {
-//                 timeout = i * timeoutInterval;
-//                 setTimeout(handleMessage.bind(null, messages[i], sender), timeout);
-//             }
-// 
-//             previousType = messages[i].type;
-// 
-//         }
-//     } else if (responseText == '' && !utils.isDefined(action)) {
-//         //api ai could not evaluate input.
-//         console.log('Unknown query' + response.result.resolvedQuery);
-//         fb_messaging.sendTextMessage(sender, "I'm not sure what you want. Can you be more specific?");
-//     } else if (utils.isDefined(action)) {
-//         handleApiAiAction(sender, action, responseText, contexts, parameters);
-//     } else if (utils.isDefined(responseData) && utils.isDefined(responseData.facebook)) {
-//         try {
-//             console.log('Response as formatted message' + responseData.facebook);
-//             fb_messaging.sendTextMessage(sender, responseData.facebook);
-//         } catch (err) {
-//             fb_messaging.sendTextMessage(sender, err.message);
-//         }
-//     } else if (utils.isDefined(responseText)) {
-// 
-//         fb_messaging.sendTextMessage(sender, responseText);
-//     }
-// }
-
-// function handleMessage(message, sender) {
-//     switch (message.type) {
-//         case 0: //text
-//             fb_messaging.sendTextMessage(sender, message.speech);
-//             break;
-//         case 1: //card message
-//             break;
-//         case 2: //quick replies
-//             let replies = [];
-//             for (var b = 0; b < message.replies.length; b++) {
-//                 let reply =
-//                     {
-//                         "content_type": "text",
-//                         "title": message.replies[b],
-//                         "payload": message.replies[b]
-//                     }
-//                 replies.push(reply);
-//             }
-//             fb_messaging.sendQuickReply(sender, message.title, replies);
-//             break;
-//         case 3: //image
-//             fb_messaging.sendImageMessage(sender, message.imageUrl);
-//             break;
-//         case 4:
-//             // custom payload
-//             var messageData = {
-//                 recipient: {
-//                     id: sender
-//                 },
-//                 message: message.payload.facebook
-// 
-//             };
-// 
-//             fb_utils.callSendAPI(messageData);
-//             break;
-//     }
-// }
-
 function handleApiAiAction(sender, action, message, contexts, parameters) {
     switch (action) {
-        case 'request-location': //asks the user to share their location
+        case 'request_location': //asks the user to share their location
             actions.requestUserLocation(sender, action, message, contexts, parameters);
             break;
-        case 'ask-resource-with-location': //search for resource with given location
-            actions.findResource(sender, action, message, contexts, parameters);
+        case 'find_meetups': //search for resource with given location
+            actions.findMeetups(sender, action, message, contexts, parameters);
             break;
         default:
             fb_messaging.sendTextMessage(sender, message);

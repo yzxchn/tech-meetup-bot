@@ -9,7 +9,7 @@ module.exports.handleLocation = function (senderID, sessionID, attachment) {
     var latitude = coordinates.lat;
 
     var event_obj = {
-        name: "share-location",
+        name: "shared_location",
         data: {
             location: {
                 longitude: longitude,

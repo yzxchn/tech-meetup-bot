@@ -3,11 +3,11 @@ const fb_messaging = require('../messaging.js');
 const fb_sample = require('../templates/sample_listing.js');
 const templateGeneration = require('../../generateResourceListing.js');
 
-//module.exports.requestUserLocation = function (sender, action, message, contexts, parameters) {
-//    var replies = [{"content_type":"location"}];
-//    fb_messaging.sendQuickReply(sender, message, replies, "request_location");
-//}
-//
+module.exports.requestUserLocation = function (sender, action, message, contexts, parameters) {
+    var replies = [{"content_type":"location"}];
+    fb_messaging.sendQuickReply(sender, message, replies, "request_location");
+}
+
 //// parameters
 //module.exports.findResource = async function (sender, action, message, contexts, parameters){
 //    // send text response from API.ai to user first
