@@ -1,0 +1,8 @@
+{
+  "name": "ShelterTechBot",
+  "description": "Official Bot of ShelterTech",
+  "repository": "https://github.com/bryanh210/ShelterTechBot",
+  "logo": "",
+  "keywords": ["node", "botkit"],
+
+}
