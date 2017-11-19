@@ -13,6 +13,7 @@ module.exports.generateListing = function (events){
         let listItem = {
             title: e.name, 
             subtitle: e.description, 
+            image_url: e.group.photo? e.group.photo.thumb_link: undefined,
             buttons: [
                 {
                     title: "Get Details",
@@ -25,6 +26,37 @@ module.exports.generateListing = function (events){
     }
 
     return fbPayload;
+}
+
+module.exports.generateEventGeneric = function (event_details) {
+    let fbPayload = {
+        template_type: "generic", 
+        elements: []
+    };
+
+    let element = {
+        title: event_details.name, 
+        subtitle: event_details.group.name+" "+event_details.local_date+" "+event_details.local_time,
+        image_url: event_details.featured_photo,
+        //default_action: {
+        //    type: "web_url", 
+        //    url: event_details.link,
+        //    fallback_url: "https://www.meetup.com/"
+        //}
+        buttons: [
+            {
+                title: "Website", 
+                type: "web_url",
+                url: event_details.link
+            }, 
+            {
+                type: "element_share"
+            }
+        ]
+    };
+    fbPayload.elements.push(element);
+
+    return fbPayload
 }
 
 //module.exports.generateResourceGeneric = function (resource) {

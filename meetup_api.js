@@ -14,7 +14,8 @@ module.exports.findEvents = async function (lon, lat, q, end_date) {
             lat: lat, 
             end_date_range: end_date,
             text: q,
-            page: "4"
+            page: "4",
+            fields: "group_photo"
         },
         transform: function (body) {
             return JSON.parse(body);
@@ -32,6 +33,10 @@ module.exports.findEvents = async function (lon, lat, q, end_date) {
 module.exports.getEventDetails = async function (id, urlname) {
     let options = {
         uri: BASE_URL+"/"+urlname+"/events/"+id,
+        qs: {
+            key: config.MEETUP_API_KEY,
+            fields: "featured_photo"
+        },
         transform: function (body) {
             return JSON.parse(body);
         }, 
